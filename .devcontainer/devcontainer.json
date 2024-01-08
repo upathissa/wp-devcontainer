@@ -1,0 +1,25 @@
+{
+    "name": "WordPress Development",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "wordpress",
+    "workspaceFolder": "/var/www/html/wp-content/plugins",
+    
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "felixfbecker.php-intellisense",
+                "bmewburn.vscode-intelephense-client",
+                "MehediDracula.php-namespace-resolver"
+            ],
+            "settings": { 
+                "terminal.integrated.shell.linux": "/bin/bash"
+            }
+        }
+    },
+    "forwardPorts": [
+        8001, // WordPress
+        8081  // phpMyAdmin
+    ],
+    "postCreateCommand": "echo 'Container started'",
+    "shutdownAction": "stopCompose"
+}

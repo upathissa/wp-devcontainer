@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  wordpress:
+    #image: wordpress:latest
+    build: .
+    ports:
+      - '8001:80'
+    volumes:
+      - ../wordpress:/var/www/html
+      - ../plugins:/var/www/html/wp-content/plugins
+      - ../themes:/var/www/html/wp-content/themes
+      - php.ini:/usr/local/etc/php/conf.d/uploads.ini
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    volumes:
+      - db_data2:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: somewordpress
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - '8081:80'
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: somewordpress
+    depends_on:
+      - db
+
+volumes:
+  db_data2:
